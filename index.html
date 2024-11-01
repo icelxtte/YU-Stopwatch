@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year Up United</title>
+    <style>
+        /* Center everything on the page */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #331528, #7c1868, #ff8800, #ffcc00); /* Gradient from dark orange to light orange */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden; /* Prevent overflow of background image */
+        }
+
+        /* Background Skyline Image */
+        body::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px; /* Adjust based on desired skyline height */
+            background: url('skyline.png') no-repeat center bottom; /* Adjust the path to your image */
+            background-size: cover;
+            opacity: 0.5; /* Adjust opacity for effect */
+            z-index: 0; /* Layer behind container */
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Increased shadow */
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            z-index: 1; /* Layer above background */
+        }
+
+        .skyline-bg {
+            position: absolute;
+            bottom: -50px; /* Adjust this value to control how much the skyline overlaps */
+            left: 0;
+            width: 100%;
+            height: 300px; /* Adjust based on desired skyline height */
+            background: url('skyline.png') no-repeat center bottom; /* Adjust the path to your image */
+            background-size: cover;
+            opacity: 0.5; /* Adjust opacity for effect */
+            z-index: 0; /* Layer behind container */
+        }
+
+
+        /* Header and description */
+        .welcome-header {
+            font-size: 1.5rem;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 1rem;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        /* Call-to-Action Button */
+        .cta-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #d3171b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .cta-button:hover {
+            background-color: #e98809;
+        }
+
+        /* Tabs and Tab Navigation */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px; /* Added margin to create space */
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .tabs button {
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #e48304;
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .tabs button.active {
+            background-color: #81435e;
+        }
+
+        /* Logo styling */
+        .logo {
+            width: 60px;
+            height: 60px;
+            margin: 10px auto;
+            cursor: pointer; /* Show pointer on hover */
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Timer and Clock Styling */
+        .time {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .world-clock {
+            font-size: 1rem;
+            color: #2c0a30;
+            margin-top: 10px;
+        }
+
+        /* Stopwatch Buttons */
+.stopwatch-button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    background: #fdb779; /* Green background */
+    color: #fff;
+    border: none;
+    border-radius: 8px; /* More rounded corners */
+    cursor: pointer;
+    margin: 5px; /* Space between buttons */
+    transition: background 0.3s, transform 0.2s; /* Added transform for scale effect */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.stopwatch-button:hover {
+    background: #ff7741; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly grow button on hover */
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Welcome Header and Description -->
+    <h1 class="welcome-header">Welcome to Year Up United!</h1>
+    <br>
+    <p class="description">
+        A successful career pathways company whose main goal is to close the opportunity gap for young adults, allowing them to achieve prosperous careers.
+    </p> 
+    <br>
+    <a href="https://www.yearup.org/" class="cta-button" target="_blank" style="text-decoration: none;">Learn More</a>
+    <br>
+    <br>
+    <!-- Tabs Navigation -->
+    <div class="tabs">
+        <button class="tab-button active" onclick="openTab('stopwatch')">Stopwatch</button>
+        <button class="tab-button" onclick="openTab('timers')">Timers</button>
+        <button class="tab-button" onclick="openTab('world-clock')">World Clock</button>
+    </div>
+
+    <!-- Logo Displayed in Each Tab -->
+    <a href="https://www.yearup.org/" target="_blank"><img src="channels4_profile.jpg" alt="Logo" class="logo"></a> <!-- Updated link -->
+
+   <!-- Stopwatch Tab Content -->
+<div id="stopwatch" class="tab-content active">
+    <div class="time" id="display">00:00:00</div>
+    <button class="stopwatch-button" onclick="start()">Start</button>
+    <button class="stopwatch-button" onclick="stop()">Stop</button>
+    <button class="stopwatch-button" onclick="reset()">Reset</button>
+</div>
+
+
+<!-- Timers Tab Content -->
+<div id="timers" class="tab-content">
+    <div class="time" id="timerDisplay">00:00:00</div> <!-- Changed to timerDisplay -->
+    <button class="stopwatch-button" onclick="setTimer(5)">5 Min Timer</button>
+    <button class="stopwatch-button" onclick="setTimer(10)">10 Min Timer</button>
+    <button class="stopwatch-button" onclick="setTimer(15)">15 Min Timer</button>
+    <button class="stopwatch-button" onclick="setTimer(30)">30 Min Timer</button>
+</div>
+    <!-- World Clock Tab Content -->
+    <div id="world-clock" class="tab-content">
+        <div class="world-clock" id="worldClock">
+            <strong>World Clock</strong><br>
+            <!-- World Clock Timezones will be updated here -->
+        </div>
+    </div>
+    <br> 
+    <p>®2024 Sachorra Douglas</p>
+
+</div>
+
+<script>
+    // Stopwatch Variables
+    let [hours, minutes, seconds] = [0, 0, 0];
+    let timerRef = document.getElementById('display');
+    let int = null;
+
+    // Start Stopwatch
+    function start() {
+        if (int !== null) {
+            clearInterval(int);
+        }
+        int = setInterval(displayTimer, 1000);
+    }
+
+    // Stop Stopwatch
+    function stop() {
+        clearInterval(int);
+    }
+
+    // Reset Stopwatch
+    function reset() {
+        clearInterval(int);
+        [hours, minutes, seconds] = [0, 0, 0];
+        timerRef.innerHTML = '00:00:00';
+    }
+
+    // Display Timer
+    function displayTimer() {
+        seconds += 1;
+        if (seconds == 60) {
+            seconds = 0;
+            minutes += 1;
+            if (minutes == 60) {
+                minutes = 0;
+                hours += 1;
+            }
+        }
+
+        let h = hours < 10 ? '0' + hours : hours;
+        let m = minutes < 10 ? '0' + minutes : minutes;
+        let s = seconds < 10 ? '0' + seconds : seconds;
+
+        timerRef.innerHTML = `${h}:${m}:${s}`;
+    }
+
+    // Set Timer with Preset Minutes
+    function setTimer(min) {
+        reset();
+        hours = 0;
+        minutes = min;
+        seconds = 0;
+        timerRef.innerHTML = `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:00`;
+        start();
+    }
+
+    // World Clock Function
+    function updateWorldClock() {
+        const now = new Date();
+        const options = { timeZone: "UTC", hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+
+        // Get times for various cities
+        const utcTime = new Intl.DateTimeFormat('en-GB', options).format(now);
+        options.timeZone = 'America/New_York';
+        const nyTime = new Intl.DateTimeFormat('en-GB', options).format(now);
+        options.timeZone = 'Europe/London';
+        const londonTime = new Intl.DateTimeFormat('en-GB', options).format(now);
+        options.timeZone = 'Asia/Tokyo';
+        const tokyoTime = new Intl.DateTimeFormat('en-GB', options).format(now);
+
+        // Display the time in different cities
+        document.getElementById('worldClock').innerHTML = `
+            <strong>World Clock</strong><br>
+            UTC: ${utcTime} <br>
+            New York: ${nyTime} <br>
+            London: ${londonTime} <br>
+            Tokyo: ${tokyoTime}
+        `;
+    }
+
+    // Update World Clock every second
+    setInterval(updateWorldClock, 1000);
+
+    // Tab Navigation
+    function openTab(tabId) {
+        const contents = document.getElementsByClassName('tab-content');
+        const buttons = document.getElementsByClassName('tab-button');
+        for (let content of contents) {
+            content.classList.remove('active');
+        }
+        for (let button of buttons) {
+            button.classList.remove('active');
+        }
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+
+    }
+    // Timer Variables
+let timerInt = null; // Timer interval variable
+let timerSeconds = 0; // Timer seconds
+
+// Set Timer with Preset Minutes
+function setTimer(min) {
+    resetTimer(); // Reset any existing timer
+    timerSeconds = min * 60; // Convert minutes to seconds
+    updateTimerDisplay(); // Update display immediately
+    startTimer(); // Start the timer
+}
+
+// Update the timer display
+function updateTimerDisplay() {
+    const minutes = Math.floor(timerSeconds / 60);
+    const seconds = timerSeconds % 60;
+    document.getElementById('timerDisplay').innerHTML = 
+        `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`; // Update timer display
+}
+
+// Start the timer
+function startTimer() {
+    if (timerInt !== null) {
+        clearInterval(timerInt); // Clear existing timer
+    }
+    timerInt = setInterval(() => {
+        if (timerSeconds > 0) {
+            timerSeconds--; // Decrement seconds
+            updateTimerDisplay(); // Update display
+        } else {
+            clearInterval(timerInt); // Clear timer when done
+            alert("Timer finished!"); // Notify when timer finishes
+        }
+    }, 1000); // Update every second
+}
+
+// Reset Timer
+function resetTimer() {
+    clearInterval(timerInt); // Clear interval
+    timerSeconds = 0; // Reset seconds
+    updateTimerDisplay(); // Update display
+}
+
+</script>
+
+</body
